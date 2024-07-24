@@ -1,3 +1,95 @@
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+// Define the base layers
+var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+ maxZoom: 19,
+ attribution: '© OpenStreetMap'
+});
+
+var scenario = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+ maxZoom: 19,
+ attribution: '© Senaryolar'
+});
+
+var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenTopoMap'
+});
+map.on('layeradd layerremove', function () {
+
+
+    var bounds = new L.LatLngBounds();
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.FeatureGroup) {
+            bounds.extend(layer.getBounds());
+        }
+    });
+   
+    if (bounds.isValid()) {
+        map.fitBounds(bounds);
+ 
+ 
+    } else {
+        map.fitWorld();
+    }
+ });
+
+
+// Define the overlay layers
+var aScenario = new L.FeatureGroup([
+  new L.Marker([38.01372, 39.8881]).bindPopup('A Scenario Marker 1'),
+  new L.Marker([37.01538, 42.1694]).bindPopup('A Scenario Marker 2'),
+  new L.Marker([36.25781, 39.2561]).bindPopup('A Scenario Marker 3'),
+]);
+
+// Add rectangle polygon to the FeatureGroup
+var rectangle = L.rectangle([
+    [  38.49906596404472, 38.33653523670128], // Southwest corner
+    [  35.4512513386467, 43.36930390470792]  // Northeast corner
+]).addTo(aScenario);
+
+
+
+var bScenario = new L.FeatureGroup([
+ new L.Marker([39.81557926336049,  29.617432333479684]).bindPopup('B Scenario Marker 1'),
+ new L.Marker([39.568194252016724, 30.00322365295699]).bindPopup('B Scenario Marker 2'),
+ new L.Marker([39.591792915885804, 29.675607214988617]).bindPopup('B Scenario Marker 3'),
+ new L.Marker([ 39.83909348986259, 29.695509148136352]).bindPopup('B Scenario Marker 4')
+
+]);
+var rectangle = L.rectangle([
+    [  40.04801538244641, 29.17805888629769], // Southwest corner
+    [  39.31163251439486, 30.32318550125268]  // Northeast corner
+]).addTo(bScenario);
+
+
+// Add the default base layer to the map
+openStreetMap.addTo(map);
+
+
+// Create an object for the base layers
+var baseLayers = {
+ "OpenStreet Map": openStreetMap,
+ "OpenTopo Map": openTopoMap,
+ "Senaryolar": scenario
+
+};
+
+
+// Create an object for the overlays
+var overlays = {
+ "A Senaryosu": aScenario,
+ "B Senaryosu": bScenario
+};
+
+
+// Add the layer control to the map
+L.control.layers(baseLayers, overlays).addTo(map);
+
+
+
+/*
+// Custom CursorHandler
 L.CursorHandler = L.Handler.extend({
     addHooks: function () {
         this._popup = new L.Popup();
@@ -27,75 +119,7 @@ L.CursorHandler = L.Handler.extend({
     }
 });
 
-L.Map.addInitHook('addHandler', 'cursor', L.CursorHandler);
+// Instantiate and add CursorHandler to the map
+(new L.CursorHandler()).addTo(map);
 
-var map = new L.Map('leaflet', {
-    center: [ 36.823250947956595, 40.6961425911082],
-    zoom: 10, // Daha iyi bir başlangıç zoom seviyesi
-    cursor: true,
-    layers: [
-        new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        })
-    ]
-});
-
-//adding and controlling layers
-
-map.on('layeradd layerremove', function () {
-
-    var bounds = new L.LatLngBounds();
-    map.eachLayer(function (layer) {
-        if (layer instanceof L.FeatureGroup) {
-            bounds.extend(layer.getBounds());
-        }
-    });
-    
-    if (bounds.isValid()) {
-        map.fitBounds(bounds);
-
-    } else {
-        map.fitWorld();
-    }
-});
-
-var markers = new L.FeatureGroup([
-    new L.Marker([38.01372, 39.8881]),
-    new L.Marker([37.01538, 42.1694]),
-    new L.Marker([36.25781, 39.2561])
-]).addTo(map);
-
-
-var squareCoords = [
-    [
-        40.05351959021385,
-        34.90444132553537
-        
-      ],
-      [
-        39.37339464563430,
-        34.90444132553537
-      ],
-      [
-        39.373394645634306,
-        35.90488787804978
-      ],
-      [
-        40.05351959021385,
-        35.90488787804978
-      ],
-      [
-        40.05351959021385,
-        34.90444132553537
-      ]
-];
-
-var polygon = new L.FeatureGroup([
-    new L.Polygon(squareCoords)
-]).addTo(map);
-
-var control = new L.Control.Layers(null, {
-    'Markers': markers,
-    'Square Polygon': polygon
-}).addTo(map);
-
+*/
