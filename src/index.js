@@ -44,8 +44,8 @@ var aScenario = new L.FeatureGroup([
 
 // Add rectangle polygon to the FeatureGroup
 var rectangle = L.rectangle([
-    [  38.49906596404472, 38.33653523670128], // Southwest corner
-    [  35.4512513386467, 43.36930390470792]  // Northeast corner
+    [38.49906596404472, 38.33653523670128], // Southwest corner
+    [35.4512513386467, 43.36930390470792]  // Northeast corner
 ]).addTo(aScenario);
 
 
@@ -54,12 +54,12 @@ var bScenario = new L.FeatureGroup([
  new L.Marker([39.81557926336049,  29.617432333479684]).bindPopup('B Scenario Marker 1'),
  new L.Marker([39.568194252016724, 30.00322365295699]).bindPopup('B Scenario Marker 2'),
  new L.Marker([39.591792915885804, 29.675607214988617]).bindPopup('B Scenario Marker 3'),
- new L.Marker([ 39.83909348986259, 29.695509148136352]).bindPopup('B Scenario Marker 4')
+ new L.Marker([39.83909348986259, 29.695509148136352]).bindPopup('B Scenario Marker 4')
 
 ]);
 var rectangle = L.rectangle([
-    [  40.04801538244641, 29.17805888629769], // Southwest corner
-    [  39.31163251439486, 30.32318550125268]  // Northeast corner
+    [40.04801538244641, 29.17805888629769], // Southwest corner
+    [39.31163251439486, 30.32318550125268]  // Northeast corner
 ]).addTo(bScenario);
 
 
